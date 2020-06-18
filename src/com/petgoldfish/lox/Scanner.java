@@ -204,9 +204,10 @@ public class Scanner {
 	}
 
 	private void string() {
+		StringBuilder value = new StringBuilder();
 		while (peek() != '"' && !isAtEnd()) {
 			if (peek() == '\n') line++;
-			advance();
+			value.append(advance());
 		}
 
 		// Unterminated string.
@@ -218,9 +219,8 @@ public class Scanner {
 		// The closing ".
 		advance();
 
-		// Trim the surrounding quotes.
-		String value = source.substring(start + 1, current - 1);
-		addToken(STRING, value);
+		// The actual string without the surrounding quotes.
+		addToken(STRING, value.toString());
 	}
 
 	private void number() {
